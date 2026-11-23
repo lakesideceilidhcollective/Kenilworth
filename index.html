@@ -198,6 +198,22 @@ footer a { color: var(--gold); }
     border: 1px solid rgba(230,170,50,.5);
 }
 .modal-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.modal-quote {
+    display: none;
+    margin: 28px auto 0;
+    padding: 22px 24px;
+    max-width: 580px;
+    border-top: 1px solid rgba(230,170,50,.65);
+    border-bottom: 1px solid rgba(230,170,50,.65);
+    color: var(--cream);
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    line-height: 1.7;
+    font-style: italic;
+    white-space: pre-line;
+}
+.modal-quote.visible { display: block; }
+
 .modal-navigation {
     position: absolute; top: 50%; left: 0; right: 0; display: flex;
     justify-content: space-between; padding: 0 15px; transform: translateY(-50%);
@@ -321,6 +337,7 @@ footer a { color: var(--gold); }
                 <h3>Watch</h3>
                 <div class="modal-video" id="modalVideo"></div>
             </div>
+            <blockquote class="modal-quote" id="modalQuote"></blockquote>
         </div>
     </div>
 </div>
@@ -471,6 +488,10 @@ function updateArtist() {
         video.appendChild(iframe);
         videoWrap.classList.add("visible");
     } else videoWrap.classList.remove("visible");
+
+    const quote = document.getElementById("modalQuote");
+    quote.textContent = artist.quote || "";
+    quote.classList.toggle("visible", Boolean(artist.quote && artist.quote.trim()));
 }
 function changeArtist(direction) {
     if (!artists.length) return;
@@ -500,8 +521,8 @@ async function loadArtists() {
         const response = await fetch("artists.csv", { cache: "no-store" });
         if (!response.ok) throw new Error("Could not load artists.csv (" + response.status + ")");
         const csv = await response.text();
-        artists = parseCSV(csv);
-        if (!artists.length) throw new Error("The CSV file is empty or has no artist rows.");
+        artists = parseCSV(csv).filter(artist => artist.name && artist.name.trim() !== "");
+        if (!artists.length) throw new Error("The CSV file has no artist rows with a name.");
         renderArtistCards();
     } catch (err) {
         grid.innerHTML = "";
