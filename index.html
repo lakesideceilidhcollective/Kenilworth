@@ -4,8 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kenilworth Folk Festival 2027</title>
-<meta name="description" content="Kenilworth Folk Festival returns 4–7 June 2027. Four days of live folk music, dancing, ceilidhs, workshops and more.">
+
+<title>Kenilworth Folk Festival</title>
+<meta name="description" content="Kenilworth Folk Festival, 4th–7th June 2027. Live folk music, Morris dancing, ceilidhs, workshops and more.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,7 @@
     --gold: #e6aa32;
     --cream: #f8f0dc;
     --dark: #25151a;
+    --texture: url("assets/festival-texture.jpg");
 }
 
 * {
@@ -36,38 +38,32 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
+button {
+    font: inherit;
+}
+
 /* HEADER */
 
 header {
-    background: var(--dark-red);
+    background-color: var(--dark-red);
+    background-image: var(--texture);
     color: var(--cream);
-    padding: 22px 6%;
+    padding: 18px 6%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     position: relative;
-    z-index: 10;
-}
-
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 21px;
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: 1px;
-}
-
-.logo span {
-    display: block;
-    color: var(--gold);
-    font-size: 12px;
-    letter-spacing: 5px;
-    margin-top: 5px;
+    z-index: 5;
+    border-bottom: 2px solid rgba(230,170,50,0.5);
 }
 
 nav {
@@ -92,89 +88,65 @@ nav a:hover {
     padding: 11px 19px;
 }
 
+/* POSTER BACKGROUND */
+
+.poster-background {
+    background-color: var(--burgundy);
+    background-image: var(--texture);
+    background-repeat: repeat;
+    background-size: 230px 230px;
+}
+
 /* HERO */
 
 .hero {
     min-height: 690px;
-    background-color: var(--burgundy);
-    background-image:
-        repeating-linear-gradient(12deg, transparent 0px, transparent 38px, rgba(20,0,0,0.12) 39px, transparent 41px),
-        repeating-linear-gradient(102deg, transparent 0px, transparent 55px, rgba(255,255,255,0.035) 56px, transparent 58px),
-        radial-gradient(ellipse at center, #922b3c 0%, #741b2c 65%, #501321 100%);
     color: var(--cream);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 85px 20px;
+    padding: 70px 20px;
     position: relative;
     overflow: hidden;
+    border-bottom: 2px solid rgba(230,170,50,0.5);
 }
 
-.hero::before,
-.hero::after {
+.hero::before {
     content: "";
     position: absolute;
-    border: 1px solid rgba(230,170,50,0.22);
-    width: 85%;
-    height: 85%;
+    inset: 15px;
+    border: 1px solid rgba(248,240,220,0.2);
     pointer-events: none;
-}
-
-.hero::after {
-    width: 80%;
-    height: 80%;
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
+    width: 100%;
     max-width: 950px;
 }
 
-.hero-year {
-    color: var(--gold);
-    letter-spacing: 15px;
-    font-size: 22px;
-    margin-bottom: 12px;
+.festival-logo {
+    display: block;
+    width: min(90%, 760px);
+    height: auto;
+    margin: 0 auto 35px;
 }
 
-.hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(48px, 8vw, 100px);
-    line-height: 0.95;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -3px;
-}
-
-.hero h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 4.5vw, 53px);
-    font-weight: 500;
-    text-transform: uppercase;
-    margin-top: 8px;
-}
-
-.patrons {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px;
-    margin-top: 15px;
-}
-
-.tree {
-    color: var(--gold);
-    font-size: clamp(100px, 19vw, 210px);
-    line-height: 1.1;
-    margin: 10px 0;
-    text-shadow: 0 4px 0 rgba(0,0,0,0.1);
+.hero-tree {
+    width: min(80%, 530px);
+    margin: 0 auto 15px;
+    display: block;
 }
 
 .hero-dates {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(38px, 6vw, 65px);
+    font-size: clamp(42px, 7vw, 76px);
+    color: var(--cream);
     margin-top: 5px;
+    text-transform: uppercase;
 }
 
 .hero-dates span {
@@ -183,10 +155,10 @@ nav a:hover {
 
 .hero-description {
     max-width: 650px;
-    margin: 18px auto 28px;
+    margin: 20px auto 30px;
     font-size: 15px;
     line-height: 1.8;
-    color: rgba(248,240,220,0.9);
+    color: var(--cream);
 }
 
 .button {
@@ -198,6 +170,8 @@ nav a:hover {
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
+    border: none;
+    cursor: pointer;
     transition: 0.2s;
 }
 
@@ -241,10 +215,14 @@ nav a:hover {
 /* LINEUP */
 
 .lineup {
-    background: var(--dark-red);
+    background-color: var(--dark-red);
+    background-image: var(--texture);
+    background-size: 230px 230px;
     color: var(--cream);
     padding: 90px 6%;
     text-align: center;
+    border-top: 2px solid rgba(230,170,50,0.4);
+    border-bottom: 2px solid rgba(230,170,50,0.4);
 }
 
 .lineup .section-label {
@@ -266,15 +244,17 @@ nav a:hover {
 
 .artist {
     padding: 32px 15px;
-    border: 1px solid rgba(230,170,50,0.15);
+    border: 1px solid rgba(230,170,50,0.2);
+    background: rgba(50,0,10,0.2);
     font-family: 'Playfair Display', serif;
     font-size: 23px;
     color: var(--cream);
+    cursor: pointer;
     transition: 0.2s;
 }
 
 .artist:hover {
-    background: rgba(230,170,50,0.1);
+    background: rgba(230,170,50,0.15);
     color: var(--gold);
 }
 
@@ -286,6 +266,13 @@ nav a:hover {
     text-transform: uppercase;
     color: var(--gold);
     margin-top: 8px;
+}
+
+.more-follow {
+    margin-top: 35px;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
 }
 
 /* ACTIVITIES */
@@ -325,16 +312,20 @@ nav a:hover {
 /* SAVE THE DATE */
 
 .save-date {
-    background: var(--burgundy);
+    background-color: var(--burgundy);
+    background-image: var(--texture);
+    background-size: 230px 230px;
     color: var(--cream);
     text-align: center;
     padding: 85px 20px;
+    border-top: 2px solid rgba(230,170,50,0.4);
 }
 
 .save-date h2 {
     font-family: 'Playfair Display', serif;
     font-size: clamp(40px, 7vw, 72px);
     margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
 .save-date p {
@@ -350,7 +341,9 @@ nav a:hover {
 /* FOOTER */
 
 footer {
-    background: var(--dark-red);
+    background-color: var(--dark-red);
+    background-image: var(--texture);
+    background-size: 230px 230px;
     color: var(--cream);
     text-align: center;
     padding: 35px 20px;
@@ -365,7 +358,7 @@ footer .footer-title {
 footer p {
     font-size: 12px;
     line-height: 1.8;
-    color: rgba(248,240,220,0.7);
+    color: rgba(248,240,220,0.8);
 }
 
 footer a {
@@ -373,22 +366,159 @@ footer a {
 }
 
 .footer-bottom {
-    border-top: 1px solid rgba(248,240,220,0.15);
+    border-top: 1px solid rgba(248,240,220,0.2);
     margin-top: 25px;
     padding-top: 20px;
     font-size: 11px;
 }
 
+/* ARTIST POP-UP */
+
+.artist-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15,0,5,0.88);
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.artist-modal.active {
+    display: flex;
+}
+
+.modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 850px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: var(--burgundy);
+    background-image: var(--texture);
+    background-size: 230px 230px;
+    color: var(--cream);
+    border: 2px solid var(--gold);
+    padding: 55px 65px;
+    text-align: center;
+    box-shadow: 0 15px 60px rgba(0,0,0,0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-size: 34px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: var(--gold);
+}
+
+.modal-content {
+    max-width: 570px;
+    margin: auto;
+}
+
+.modal-photo {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    margin: 0 auto 25px;
+    background: rgba(40,0,10,0.5);
+    border: 1px solid rgba(230,170,50,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.modal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 46px);
+    margin-bottom: 18px;
+    color: var(--gold);
+}
+
+.modal-bio {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.modal-socials {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.modal-socials a {
+    color: var(--gold);
+    font-size: 13px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 3px;
+}
+
+.modal-socials a:hover {
+    color: var(--cream);
+}
+
+.modal-navigation {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.modal-arrow {
+    width: 42px;
+    height: 55px;
+    border: 1px solid var(--gold);
+    background: rgba(50,0,10,0.8);
+    color: var(--gold);
+    font-size: 30px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: 0.2s;
+}
+
+.modal-arrow:hover {
+    background: var(--gold);
+    color: var(--dark-red);
+}
+
 /* MOBILE */
 
 @media (max-width: 700px) {
+
     header {
-        flex-direction: column;
-        gap: 20px;
+        justify-content: center;
+        padding: 18px 10px;
     }
 
     nav {
-        gap: 16px;
+        gap: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -398,15 +528,17 @@ footer a {
     }
 
     .hero {
-        min-height: 600px;
+        min-height: 570px;
+        padding: 60px 15px;
     }
 
-    .hero-year {
-        letter-spacing: 9px;
+    .festival-logo {
+        width: 95%;
+        margin-bottom: 30px;
     }
 
-    .hero h1 {
-        letter-spacing: -1px;
+    .hero-dates {
+        font-size: 43px;
     }
 
     .artists {
@@ -428,18 +560,47 @@ footer a {
         padding-top: 65px;
         padding-bottom: 65px;
     }
+
+    .modal-box {
+        padding: 55px 45px 40px;
+    }
+
+    .modal-photo {
+        height: 190px;
+    }
+
+    .modal-arrow {
+        width: 32px;
+        height: 45px;
+        font-size: 24px;
+    }
+
+    .modal-navigation {
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 400px) {
+    nav {
+        gap: 11px;
+    }
+
+    nav a {
+        font-size: 10px;
+    }
+
+    .hero-dates {
+        font-size: 36px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <a href="#" class="logo">
-        KENILWORTH
-        <span>FOLK FESTIVAL 2027</span>
-    </a>
+<!-- HEADER -->
 
+<header>
     <nav>
         <a href="#about">About</a>
         <a href="#lineup">Artists</a>
@@ -450,20 +611,24 @@ footer a {
 
 <main>
 
-<section class="hero">
+<!-- HERO -->
+
+<section class="hero poster-background">
     <div class="hero-content">
-        <div class="hero-year">2 0 2 7</div>
 
-        <h1>Kenilworth</h1>
-        <h2>Folk Festival</h2>
-
-        <div class="patrons">Patrons: Simon Care &amp; Benji Kirkpatrick</div>
-
-        <div class="tree">♣</div>
+        <img
+            src="assets/festival-logo.png"
+            alt="Kenilworth Folk Festival"
+            class="festival-logo"
+        >
 
         <div class="hero-dates">
-            JUNE <span>4–7</span>
+            JUNE <span>4th–7th</span>
         </div>
+
+        <p style="font-family:'Playfair Display',serif;font-size:19px;margin-top:10px;">
+            2027
+        </p>
 
         <p class="hero-description">
             Four days of folk music, dancing, workshops, ceilidhs
@@ -471,12 +636,18 @@ footer a {
         </p>
 
         <a href="#tickets" class="button">Save the Date</a>
+
     </div>
 </section>
 
+<!-- ABOUT -->
+
 <section class="intro" id="about">
-    <div class="section-label">4–7 June 2027</div>
+
+    <div class="section-label">4th–7th June 2027</div>
+
     <h2>Folk Music. Dancing. Community.</h2>
+
     <p>
         Kenilworth Folk Festival returns in June 2027 for four days
         celebrating folk music, traditional dance and everything
@@ -484,32 +655,70 @@ footer a {
         ceilidhs, workshops and music sessions across Kenilworth,
         there's plenty to look forward to.
     </p>
+
 </section>
 
+<!-- ARTISTS -->
+
 <section class="lineup" id="lineup">
+
     <div class="section-label">The 2027 Festival</div>
+
     <h2 class="section-heading">Artists &amp; Performers</h2>
 
     <div class="artists">
-        <div class="artist">Banter!<small>Live Music</small></div>
-        <div class="artist">Tarren<small>Live Music</small></div>
-        <div class="artist">David Eagle DJ<small>DJ</small></div>
-        <div class="artist">Juniper<small>Live Music</small></div>
-        <div class="artist">Bouzouki III<small>Live Music</small></div>
-        <div class="artist">Lauren South<small>Live Music</small></div>
-        <div class="artist">Oakstone Trio<small>Live Music</small></div>
+
+        <button class="artist" onclick="openArtist(0)">
+            Banter!
+            <small>Live Music</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(1)">
+            Tarren
+            <small>Live Music</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(2)">
+            David Eagle DJ
+            <small>DJ</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(3)">
+            Juniper
+            <small>Live Music</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(4)">
+            Bouzouki III
+            <small>Live Music</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(5)">
+            Lauren South
+            <small>Live Music</small>
+        </button>
+
+        <button class="artist" onclick="openArtist(6)">
+            Oakstone Trio
+            <small>Live Music</small>
+        </button>
+
     </div>
 
-    <p style="margin-top:35px;color:var(--gold);font-family:'Playfair Display',serif;font-size:22px;">
-        More to follow...
-    </p>
+    <p class="more-follow">More to follow...</p>
+
 </section>
 
+<!-- ACTIVITIES -->
+
 <section class="activities" id="activities">
+
     <div class="section-label">More than just music</div>
+
     <h2 class="section-heading">What's On</h2>
 
     <div class="activity-grid">
+
         <div class="activity">
             <h3>Morris Dancing</h3>
             <p>Featuring Plum Jerkum and more.</p>
@@ -539,28 +748,42 @@ footer a {
             <h3>Music Sessions</h3>
             <p>Music sessions taking place across Kenilworth.</p>
         </div>
+
     </div>
+
 </section>
 
+<!-- SAVE THE DATE -->
+
 <section class="save-date" id="tickets">
+
     <h2>Save the Date!</h2>
+
     <p>
-        4–7 June 2027<br>
+        4th–7th June 2027<br>
         Tickets available from February 2027.<br>
-        Join our mailing list for festival updates.
+        Join our mailing list to be first to hear about tickets.
     </p>
 
-    <a href="mailto:kenilworthfolkfestival@mail.uk?subject=Festival%20Mailing%20List"
-       class="button">
+    <a
+        href="mailto:kenilworthfolkfestival@mail.uk?subject=Festival%20Mailing%20List"
+        class="button"
+    >
         Join the Mailing List
     </a>
+
 </section>
 
 </main>
 
+<!-- FOOTER -->
+
 <footer>
-    <div class="footer-title">Kenilworth Folk Festival 2027</div>
-    <p>4–7 June 2027</p>
+
+    <div class="footer-title">Kenilworth Folk Festival</div>
+
+    <p>4th–7th June 2027</p>
+
     <p>
         <a href="mailto:kenilworthfolkfestival@mail.uk">
             kenilworthfolkfestival@mail.uk
@@ -568,9 +791,198 @@ footer a {
     </p>
 
     <div class="footer-bottom">
-        &copy; 2027 Kenilworth Folk Festival
+        &copy; Kenilworth Folk Festival
     </div>
+
 </footer>
+
+<!-- ARTIST POP-UP -->
+
+<div class="artist-modal" id="artistModal" onclick="outsideModal(event)">
+
+    <div class="modal-box">
+
+        <button
+            class="modal-close"
+            onclick="closeArtist()"
+            aria-label="Close"
+        >&times;</button>
+
+        <div class="modal-navigation">
+
+            <button
+                class="modal-arrow"
+                onclick="changeArtist(-1)"
+                aria-label="Previous artist"
+            >&#8249;</button>
+
+            <button
+                class="modal-arrow"
+                onclick="changeArtist(1)"
+                aria-label="Next artist"
+            >&#8250;</button>
+
+        </div>
+
+        <div class="modal-content">
+
+            <div class="modal-photo" id="modalPhoto">
+                Photo coming soon
+            </div>
+
+            <h2 id="modalName"></h2>
+
+            <p class="modal-bio" id="modalBio"></p>
+
+            <div class="modal-socials">
+
+                <a href="#" target="_blank">Website</a>
+                <a href="#" target="_blank">Facebook</a>
+                <a href="#" target="_blank">Instagram</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ARTIST INFORMATION */
+
+const artists = [
+    {
+        name: "Banter!",
+        bio: "Banter! - bio",
+        photo: ""
+    },
+    {
+        name: "Tarren",
+        bio: "Tarren - bio",
+        photo: ""
+    },
+    {
+        name: "David Eagle DJ",
+        bio: "David Eagle DJ - bio",
+        photo: ""
+    },
+    {
+        name: "Juniper",
+        bio: "Juniper - bio",
+        photo: ""
+    },
+    {
+        name: "Bouzouki III",
+        bio: "Bouzouki III - bio",
+        photo: ""
+    },
+    {
+        name: "Lauren South",
+        bio: "Lauren South - bio",
+        photo: ""
+    },
+    {
+        name: "Oakstone Trio",
+        bio: "Oakstone Trio - bio",
+        photo: ""
+    }
+];
+
+let currentArtist = 0;
+
+const modal = document.getElementById("artistModal");
+
+/* OPEN ARTIST */
+
+function openArtist(index) {
+    currentArtist = index;
+    updateArtist();
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
+}
+
+/* UPDATE ARTIST CONTENT */
+
+function updateArtist() {
+
+    const artist = artists[currentArtist];
+
+    document.getElementById("modalName").textContent = artist.name;
+
+    document.getElementById("modalBio").textContent = artist.bio;
+
+    const photo = document.getElementById("modalPhoto");
+
+    if (artist.photo) {
+        photo.innerHTML = "";
+
+        const img = document.createElement("img");
+        img.src = artist.photo;
+        img.alt = artist.name;
+
+        photo.appendChild(img);
+    } else {
+        photo.textContent = "Photo coming soon";
+    }
+
+}
+
+/* NEXT / PREVIOUS ARTIST */
+
+function changeArtist(direction) {
+
+    currentArtist += direction;
+
+    if (currentArtist < 0) {
+        currentArtist = artists.length - 1;
+    }
+
+    if (currentArtist >= artists.length) {
+        currentArtist = 0;
+    }
+
+    updateArtist();
+
+}
+
+/* CLOSE POP-UP */
+
+function closeArtist() {
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+}
+
+/* CLOSE WHEN CLICKING OUTSIDE */
+
+function outsideModal(event) {
+    if (event.target === modal) {
+        closeArtist();
+    }
+}
+
+/* KEYBOARD CONTROLS */
+
+document.addEventListener("keydown", function(event) {
+
+    if (!modal.classList.contains("active")) return;
+
+    if (event.key === "Escape") {
+        closeArtist();
+    }
+
+    if (event.key === "ArrowRight") {
+        changeArtist(1);
+    }
+
+    if (event.key === "ArrowLeft") {
+        changeArtist(-1);
+    }
+
+});
+
+</script>
 
 </body>
 </html>
