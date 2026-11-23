@@ -19,7 +19,6 @@
     --gold: #e6aa32;
     --cream: #f8f0dc;
     --dark: #25151a;
-    --texture: url("assets/festival-texture.jpg");
 }
 
 * {
@@ -54,16 +53,21 @@ button {
 /* HEADER */
 
 header {
-    background-color: var(--dark-red);
-    background-image: var(--texture);
+    background: var(--dark-red);
     color: var(--cream);
-    padding: 18px 6%;
+    padding: 12px 6%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     z-index: 5;
-    border-bottom: 2px solid rgba(230,170,50,0.5);
+    border-bottom: 1px solid rgba(230,170,50,0.3);
+}
+
+.header-logo img {
+    display: block;
+    width: 210px;
+    height: auto;
 }
 
 nav {
@@ -75,6 +79,10 @@ nav {
 nav a {
     font-size: 13px;
     font-weight: 600;
+    color: var(--cream);
+    text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
     transition: color 0.2s;
 }
 
@@ -82,25 +90,29 @@ nav a:hover {
     color: var(--gold);
 }
 
+nav a:focus {
+    outline: none;
+}
+
 .nav-ticket {
     border: 1px solid var(--gold);
-    color: var(--gold);
+    color: var(--gold) !important;
     padding: 11px 19px;
 }
 
-/* POSTER BACKGROUND */
-
-.poster-background {
-    background-color: var(--burgundy);
-    background-image: var(--texture);
-    background-repeat: repeat;
-    background-size: 230px 230px;
+.nav-ticket:hover {
+    background: var(--gold);
+    color: var(--dark-red) !important;
 }
 
 /* HERO */
 
 .hero {
     min-height: 690px;
+    background-color: var(--burgundy);
+    background-image: url("assets/festival-texture.jpg");
+    background-repeat: repeat;
+    background-size: 230px 230px;
     color: var(--cream);
     display: flex;
     flex-direction: column;
@@ -135,12 +147,6 @@ nav a:hover {
     margin: 0 auto 35px;
 }
 
-.hero-tree {
-    width: min(80%, 530px);
-    margin: 0 auto 15px;
-    display: block;
-}
-
 .hero-dates {
     font-family: 'Playfair Display', serif;
     font-size: clamp(42px, 7vw, 76px);
@@ -151,6 +157,13 @@ nav a:hover {
 
 .hero-dates span {
     color: var(--gold);
+}
+
+.hero-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    margin-top: 10px;
+    color: var(--cream);
 }
 
 .hero-description {
@@ -215,14 +228,10 @@ nav a:hover {
 /* LINEUP */
 
 .lineup {
-    background-color: var(--dark-red);
-    background-image: var(--texture);
-    background-size: 230px 230px;
+    background: var(--dark-red);
     color: var(--cream);
     padding: 90px 6%;
     text-align: center;
-    border-top: 2px solid rgba(230,170,50,0.4);
-    border-bottom: 2px solid rgba(230,170,50,0.4);
 }
 
 .lineup .section-label {
@@ -245,7 +254,7 @@ nav a:hover {
 .artist {
     padding: 32px 15px;
     border: 1px solid rgba(230,170,50,0.2);
-    background: rgba(50,0,10,0.2);
+    background: transparent;
     font-family: 'Playfair Display', serif;
     font-size: 23px;
     color: var(--cream);
@@ -254,8 +263,13 @@ nav a:hover {
 }
 
 .artist:hover {
-    background: rgba(230,170,50,0.15);
+    background: rgba(230,170,50,0.12);
     color: var(--gold);
+}
+
+.artist:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
 }
 
 .artist small {
@@ -280,6 +294,7 @@ nav a:hover {
 .activities {
     padding: 90px 6%;
     text-align: center;
+    background: var(--cream);
 }
 
 .activity-grid {
@@ -309,16 +324,13 @@ nav a:hover {
     color: #59484a;
 }
 
-/* SAVE THE DATE */
+/* TICKETS */
 
 .save-date {
-    background-color: var(--burgundy);
-    background-image: var(--texture);
-    background-size: 230px 230px;
+    background: var(--burgundy);
     color: var(--cream);
     text-align: center;
     padding: 85px 20px;
-    border-top: 2px solid rgba(230,170,50,0.4);
 }
 
 .save-date h2 {
@@ -341,9 +353,7 @@ nav a:hover {
 /* FOOTER */
 
 footer {
-    background-color: var(--dark-red);
-    background-image: var(--texture);
-    background-size: 230px 230px;
+    background: var(--dark-red);
     color: var(--cream);
     text-align: center;
     padding: 35px 20px;
@@ -395,9 +405,7 @@ footer a {
     max-width: 850px;
     max-height: 90vh;
     overflow-y: auto;
-    background-color: var(--burgundy);
-    background-image: var(--texture);
-    background-size: 230px 230px;
+    background: var(--burgundy);
     color: var(--cream);
     border: 2px solid var(--gold);
     padding: 55px 65px;
@@ -513,14 +521,19 @@ footer a {
 @media (max-width: 700px) {
 
     header {
-        justify-content: center;
-        padding: 18px 10px;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header-logo img {
+        width: 190px;
     }
 
     nav {
         gap: 15px;
-        flex-wrap: wrap;
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     nav a {
@@ -581,6 +594,7 @@ footer a {
 }
 
 @media (max-width: 400px) {
+
     nav {
         gap: 11px;
     }
@@ -593,6 +607,7 @@ footer a {
         font-size: 36px;
     }
 }
+
 </style>
 </head>
 
@@ -601,19 +616,26 @@ footer a {
 <!-- HEADER -->
 
 <header>
+
+    <a href="#" class="header-logo">
+        <img src="assets/festival-logo.png" alt="Kenilworth Folk Festival">
+    </a>
+
     <nav>
         <a href="#about">About</a>
         <a href="#lineup">Artists</a>
         <a href="#activities">What's On</a>
         <a href="#tickets" class="nav-ticket">Tickets</a>
     </nav>
+
 </header>
 
 <main>
 
-<!-- HERO -->
+<!-- MAIN HERO -->
 
-<section class="hero poster-background">
+<section class="hero">
+
     <div class="hero-content">
 
         <img
@@ -626,9 +648,7 @@ footer a {
             JUNE <span>4th–7th</span>
         </div>
 
-        <p style="font-family:'Playfair Display',serif;font-size:19px;margin-top:10px;">
-            2027
-        </p>
+        <div class="hero-year">2027</div>
 
         <p class="hero-description">
             Four days of folk music, dancing, workshops, ceilidhs
@@ -638,6 +658,7 @@ footer a {
         <a href="#tickets" class="button">Save the Date</a>
 
     </div>
+
 </section>
 
 <!-- ABOUT -->
@@ -753,7 +774,7 @@ footer a {
 
 </section>
 
-<!-- SAVE THE DATE -->
+<!-- TICKETS -->
 
 <section class="save-date" id="tickets">
 
@@ -835,11 +856,9 @@ footer a {
             <p class="modal-bio" id="modalBio"></p>
 
             <div class="modal-socials">
-
                 <a href="#" target="_blank">Website</a>
                 <a href="#" target="_blank">Facebook</a>
                 <a href="#" target="_blank">Instagram</a>
-
             </div>
 
         </div>
@@ -916,6 +935,7 @@ function updateArtist() {
     const photo = document.getElementById("modalPhoto");
 
     if (artist.photo) {
+
         photo.innerHTML = "";
 
         const img = document.createElement("img");
@@ -923,8 +943,11 @@ function updateArtist() {
         img.alt = artist.name;
 
         photo.appendChild(img);
+
     } else {
+
         photo.textContent = "Photo coming soon";
+
     }
 
 }
@@ -957,9 +980,11 @@ function closeArtist() {
 /* CLOSE WHEN CLICKING OUTSIDE */
 
 function outsideModal(event) {
+
     if (event.target === modal) {
         closeArtist();
     }
+
 }
 
 /* KEYBOARD CONTROLS */
