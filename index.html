@@ -309,7 +309,7 @@ footer a { color: var(--gold); }
 <section class="save-date" id="tickets">
     <h2>Save the Date!</h2>
     <p>4th–7th June 2027<br>Tickets available from February 2027.<br>Join our mailing list to be first to hear about tickets.</p>
-    <a href="mailto:kenilworthfolkfestival@mail.uk?subject=Festival%20Mailing%20List" class="button">Join the Mailing List</a>
+    <a href="mailto:kenilworthfolkfestival@mail.uk?subject=Join%20the%20Kenilworth%20Folk%20Festival%20mailing%20list&amp;body=Please%20add%20my%20email%20address%20to%20the%20Kenilworth%20Folk%20Festival%20mailing%20list%20for%20festival%20news%20and%20ticket%20updates.%0A%0AThank%20you." class="button">Join the Mailing List</a>
 </section>
 </main>
 
@@ -390,7 +390,7 @@ function youtubeEmbed(value) {
         if (url.hostname.includes("youtu.be")) id = url.pathname.slice(1);
         else if (url.hostname.includes("youtube.com")) {
             if (url.pathname === "/watch") id = url.searchParams.get("v") || "";
-            else if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/")) id = url.pathname.split("/")[2] || "";
+            else if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/") || url.pathname.startsWith("/live/")) id = url.pathname.split("/")[2] || "";
         } else if (url.hostname.includes("vimeo.com")) {
             id = url.pathname.split("/").filter(Boolean).pop() || "";
             return /^\d+$/.test(id) ? "https://player.vimeo.com/video/" + id : "";
@@ -433,12 +433,6 @@ function renderArtistCards() {
         const name = document.createElement("span");
         name.className = "artist-name";
         name.textContent = artist.name || "Artist";
-        if (artist.category) {
-            const category = document.createElement("span");
-            category.className = "artist-category";
-            category.textContent = artist.category;
-            name.appendChild(category);
-        }
         button.appendChild(name);
         grid.appendChild(button);
     });
