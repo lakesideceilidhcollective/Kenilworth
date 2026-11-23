@@ -51,8 +51,12 @@ button {
 }
 
 /* HEADER */
-
+body {
+  padding-top: 90px;
+}
 header {
+
+}
     background: var(--dark-red);
     color: var(--cream);
     padding: 12px 6%;
@@ -62,6 +66,11 @@ header {
     position: relative;
     z-index: 5;
     border-bottom: 1px solid rgba(230,170,50,0.3);
+      position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .header-logo img {
@@ -812,7 +821,11 @@ footer a {
     <div class="footer-bottom">
         &copy; Kenilworth Folk Festival
     </div>
-
+<a href="https://www.facebook.com/p/Kenilworth-Folk-Festival-61594588766591/"
+   target="_blank"
+   rel="noopener noreferrer">
+  Facebook
+</a>
 </footer>
 
 <!-- ARTIST POP-UP -->
@@ -888,7 +901,10 @@ const artists = [
     {
           name: "Juniper",
           bio: "Fresh from the vibrant Birmingham music scene, Juniper have teamed up with award-winning percussionist and producer Cormac Byrne (The Haar, Seth Lakeman Band) to develop and release their second album ‘Halfway Home’.\n\nThe range of expertise of the band’s members shines through, manifesting as a fusion of orchestral, funk, Americana, house, and rock, paired with the band’s established Celtic-influenced self-penned offerings.\n\n‘Majestic folk for our modern age… One of the most exciting new folk releases’\n\nNathaniel Handy - Songlines",
-          photo: "assets/juniper.jpg"
+          photo: "assets/juniper.jpg",
+          website: "https://juniperfolk.co.uk",
+          instagram: "https://www.instagram.com/juniperfolk/",
+          facebook: "https://www.facebook.com/juniperfolk/"
     },
     {
         name: "Bouzouki III",
