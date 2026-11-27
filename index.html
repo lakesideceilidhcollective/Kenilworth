@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="en"><head>
+    <base href="https://kenilworthfolkfestival.co.uk.thetrailerstage.co.uk/"><meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kenilworth Folk Festival</title>
 <meta name="description" content="Kenilworth Folk Festival, 4th–7th June 2027. Live folk music, Morris dancing, ceilidhs, workshops and more.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -154,6 +153,80 @@ nav a:hover { color: var(--gold); }
 .save-date h2 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 7vw, 72px); margin-bottom: 15px; text-transform: uppercase; }
 .save-date p { font-size: 15px; line-height: 1.8; margin-bottom: 25px; }
 .save-date .button { margin-top: 8px; }
+
+.save-date .mailing-form {
+    width: min(100%, 460px);
+    margin: 28px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+}
+.save-date .mailing-form label {
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .4px;
+}
+.save-date .mailing-form input[type="email"] {
+    width: 100%;
+    padding: 15px 16px;
+    background: var(--cream);
+    color: var(--dark);
+    border: 2px solid var(--gold);
+    border-radius: 0;
+    font: 15px 'DM Sans', sans-serif;
+    outline: none;
+}
+.save-date .mailing-form input[type="email"]:focus,
+.save-date .mailing-form input[type="text"]:focus {
+    box-shadow: 0 0 0 3px rgba(230,170,50,.28);
+}
+.save-date .mailing-interests {
+    display: grid;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid rgba(230,170,50,.65);
+    background: rgba(75,16,30,.45);
+}
+.save-date .mailing-interests legend {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    padding: 0 6px;
+}
+.save-date .mailing-interests label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.5;
+    cursor: pointer;
+}
+.save-date .mailing-interests input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    margin: 2px 0 0;
+}
+.save-date .mailing-form input[type="text"] {
+    width: 100%;
+    padding: 13px 15px;
+    background: var(--cream);
+    color: var(--dark);
+    border: 2px solid var(--gold);
+    border-radius: 0;
+    font: 14px 'DM Sans', sans-serif;
+}
+.save-date .mailing-form button {
+    align-self: center;
+    margin-top: 6px;
+}
+
 footer { background: var(--dark-red); color: var(--cream); text-align: center; padding: 35px 20px; }
 footer .footer-title { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 10px; }
 footer p { font-size: 12px; line-height: 1.8; color: rgba(248,240,220,.8); }
@@ -256,7 +329,7 @@ footer a { color: var(--gold); }
 </style>
 </head>
 
-<body>
+<body dir="ltr" spellcheck="false" style="direction: ltr; min-height: 901px;">
 <header>
     <a href="#" class="header-logo"><img src="assets/festival-logo.png" alt="Kenilworth Folk Festival"></a>
     <nav>
@@ -290,7 +363,7 @@ footer a { color: var(--gold); }
         <p class="artist-error">Loading artists…</p>
     </div>
     <p class="more-follow">More to follow...</p>
-    <p class="artist-error" id="artistError" hidden></p>
+    <p class="artist-error" id="artistError" hidden=""><br></p>
 </section>
 
 <section class="activities" id="activities">
@@ -309,7 +382,25 @@ footer a { color: var(--gold); }
 <section class="save-date" id="tickets">
     <h2>Save the Date!</h2>
     <p>4th–7th June 2027<br>Tickets available from February 2027.<br>Join our mailing list to be first to hear about tickets.</p>
-    <a href="mailto:kenilworthfolkfestival@mail.uk?subject=Join%20the%20Kenilworth%20Folk%20Festival%20mailing%20list&amp;body=Please%20add%20my%20email%20address%20to%20the%20Kenilworth%20Folk%20Festival%20mailing%20list%20for%20festival%20news%20and%20ticket%20updates.%0A%0AThank%20you." class="button">Join the Mailing List</a>
+    <form class="mailing-form" action="https://formsubmit.co/kenilworthfolkfestival@mail.uk" method="POST">
+        <input type="hidden" name="_subject" value="New Kenilworth Folk Festival mailing list signup">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <label for="mailingEmail">Email address</label>
+        <input type="email" id="mailingEmail" name="email" placeholder="Your email address" autocomplete="email" required>
+
+        <fieldset class="mailing-interests">
+            <legend>What are you interested in?</legend>
+            <label><input type="checkbox" name="interests[]" value="Tickets"> <span>Being interested in tickets</span></label>
+            <label><input type="checkbox" name="interests[]" value="Volunteering / stewarding"> <span>Interested in volunteering / stewarding</span></label>
+            <label><input type="checkbox" name="interests[]" value="Contributing to the festival (trade / performers)"> <span>Contributing to the festival (trade / performers)</span></label>
+            <label><input type="checkbox" name="interests[]" value="Other"> <span>Other (please specify)</span></label>
+        </fieldset>
+        <label for="mailingOther">If you selected “Other”, please tell us more (optional)</label>
+        <input type="text" id="mailingOther" name="other_interest" placeholder="Please specify">
+
+        <button type="submit" class="button">Join the Mailing List</button>
+    </form>
 </section>
 </main>
 
@@ -318,213 +409,34 @@ footer a { color: var(--gold); }
     <p>4th–7th June 2027</p>
     <p><a href="mailto:kenilworthfolkfestival@mail.uk">kenilworthfolkfestival@mail.uk</a></p>
     <a class="footer-social" href="https://www.facebook.com/p/Kenilworth-Folk-Festival-61594588766591/" target="_blank" rel="noopener noreferrer">Facebook</a>
-    <div class="footer-bottom">&copy; Kenilworth Folk Festival</div>
+    <div class="footer-bottom">© Kenilworth Folk Festival</div>
 </footer>
 
 <div class="artist-modal" id="artistModal" onclick="outsideModal(event)" aria-hidden="true">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalName">
-        <button class="modal-close" onclick="closeArtist()" aria-label="Close">&times;</button>
+        <button class="modal-close" onclick="closeArtist()" aria-label="Close">×</button>
         <div class="modal-navigation">
-            <button class="modal-arrow" onclick="changeArtist(-1)" aria-label="Previous artist">&#8249;</button>
-            <button class="modal-arrow" onclick="changeArtist(1)" aria-label="Next artist">&#8250;</button>
+            <button class="modal-arrow" onclick="changeArtist(-1)" aria-label="Previous artist">‹</button>
+            <button class="modal-arrow" onclick="changeArtist(1)" aria-label="Next artist">›</button>
         </div>
         <div class="modal-content">
             <div class="modal-photo" id="modalPhoto">Photo coming soon</div>
-            <h2 id="modalName"></h2>
-            <p class="modal-bio" id="modalBio"></p>
-            <div class="modal-socials" id="modalSocials"></div>
+            <h2 id="modalName"><br></h2>
+            <p class="modal-bio" id="modalBio"><br></p>
+            <div class="modal-socials" id="modalSocials"><br></div>
             <div class="modal-video-wrap" id="modalVideoWrap">
                 <h3>Watch</h3>
-                <div class="modal-video" id="modalVideo"></div>
+                <div class="modal-video" id="modalVideo"><br></div>
             </div>
-            <blockquote class="modal-quote" id="modalQuote"></blockquote>
+            <blockquote class="modal-quote" id="modalQuote"><br></blockquote>
         </div>
     </div>
 </div>
 
-<script>
-let artists = [];
-let currentArtist = 0;
-const modal = document.getElementById("artistModal");
 
-function parseCSV(text) {
-    const rows = [];
-    let row = [], field = "", quoted = false;
-    for (let i = 0; i < text.length; i++) {
-        const char = text[i], next = text[i + 1];
-        if (quoted) {
-            if (char === '"' && next === '"') { field += '"'; i++; }
-            else if (char === '"') quoted = false;
-            else field += char;
-        } else {
-            if (char === '"') quoted = true;
-            else if (char === ',') { row.push(field); field = ""; }
-            else if (char === '\n') { row.push(field); rows.push(row); row = []; field = ""; }
-            else if (char !== '\r') field += char;
-        }
-    }
-    if (field.length || row.length) { row.push(field); rows.push(row); }
-    if (!rows.length) return [];
-    const headers = rows.shift().map(h => h.trim().toLowerCase());
-    return rows.filter(r => r.some(v => v.trim() !== "")).map(r => {
-        const item = {};
-        headers.forEach((h, i) => item[h] = (r[i] || "").trim());
-        return item;
-    });
-}
+<style data-cpanel-injected="cpanel-editor-padding">
+body { padding-bottom: 80px !important; }
+</style>
 
-function safeUrl(value) {
-    if (!value) return "";
-    try {
-        const url = new URL(value.startsWith("http") ? value : "https://" + value);
-        return ["https:", "http:"].includes(url.protocol) ? url.href : "";
-    } catch { return ""; }
-}
 
-function youtubeEmbed(value) {
-    const urlText = safeUrl(value);
-    if (!urlText) return "";
-    try {
-        const url = new URL(urlText);
-        let id = "";
-        if (url.hostname.includes("youtu.be")) id = url.pathname.slice(1);
-        else if (url.hostname.includes("youtube.com")) {
-            if (url.pathname === "/watch") id = url.searchParams.get("v") || "";
-            else if (url.pathname.startsWith("/embed/") || url.pathname.startsWith("/shorts/") || url.pathname.startsWith("/live/")) id = url.pathname.split("/")[2] || "";
-        } else if (url.hostname.includes("vimeo.com")) {
-            id = url.pathname.split("/").filter(Boolean).pop() || "";
-            return /^\d+$/.test(id) ? "https://player.vimeo.com/video/" + id : "";
-        }
-        return /^[A-Za-z0-9_-]{6,}$/.test(id) ? "https://www.youtube-nocookie.com/embed/" + id : "";
-    } catch { return ""; }
-}
-
-function createSocialLink(label, value) {
-    const url = safeUrl(value);
-    if (!url) return null;
-    const a = document.createElement("a");
-    a.href = url; a.textContent = label; a.target = "_blank"; a.rel = "noopener noreferrer";
-    return a;
-}
-
-function renderArtistCards() {
-    const grid = document.getElementById("artistsGrid");
-    grid.innerHTML = "";
-    artists.forEach((artist, index) => {
-        const button = document.createElement("button");
-        button.className = "artist";
-        button.type = "button";
-        button.addEventListener("click", () => openArtist(index));
-
-        if (artist.photo) {
-            const img = document.createElement("img");
-            img.src = artist.photo;
-            img.alt = artist.name || "Artist";
-            img.loading = "lazy";
-            img.onerror = () => img.remove();
-            button.appendChild(img);
-        } else {
-            const placeholder = document.createElement("span");
-            placeholder.className = "artist-placeholder";
-            placeholder.textContent = "Photo coming soon";
-            button.appendChild(placeholder);
-        }
-
-        const name = document.createElement("span");
-        name.className = "artist-name";
-        name.textContent = artist.name || "Artist";
-        button.appendChild(name);
-        grid.appendChild(button);
-    });
-}
-
-function openArtist(index) {
-    currentArtist = index;
-    updateArtist();
-    modal.classList.add("active");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-}
-function updateArtist() {
-    const artist = artists[currentArtist];
-    document.getElementById("modalName").textContent = artist.name || "";
-    document.getElementById("modalBio").textContent = artist.bio || "";
-
-    const photo = document.getElementById("modalPhoto");
-    photo.innerHTML = "";
-    if (artist.photo) {
-        const img = document.createElement("img");
-        img.src = artist.photo;
-        img.alt = artist.name || "Artist";
-        img.onerror = () => { photo.textContent = "Photo coming soon"; };
-        photo.appendChild(img);
-    } else photo.textContent = "Photo coming soon";
-
-    const socials = document.getElementById("modalSocials");
-    socials.innerHTML = "";
-    [["Website", artist.website], ["Facebook", artist.facebook], ["Instagram", artist.instagram]].forEach(([label, value]) => {
-        const link = createSocialLink(label, value);
-        if (link) socials.appendChild(link);
-    });
-    socials.hidden = socials.children.length === 0;
-
-    const videoWrap = document.getElementById("modalVideoWrap");
-    const video = document.getElementById("modalVideo");
-    video.innerHTML = "";
-    const embed = youtubeEmbed(artist.video);
-    if (embed) {
-        const iframe = document.createElement("iframe");
-        iframe.src = embed;
-        iframe.title = (artist.name || "Artist") + " video";
-        iframe.loading = "lazy";
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-        iframe.allowFullscreen = true;
-        video.appendChild(iframe);
-        videoWrap.classList.add("visible");
-    } else videoWrap.classList.remove("visible");
-
-    const quote = document.getElementById("modalQuote");
-    quote.textContent = artist.quote || "";
-    quote.classList.toggle("visible", Boolean(artist.quote && artist.quote.trim()));
-}
-function changeArtist(direction) {
-    if (!artists.length) return;
-    currentArtist = (currentArtist + direction + artists.length) % artists.length;
-    updateArtist();
-}
-function closeArtist() {
-    modal.classList.remove("active");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-    document.getElementById("modalVideo").innerHTML = "";
-}
-function outsideModal(event) {
-    if (event.target === modal) closeArtist();
-}
-document.addEventListener("keydown", event => {
-    if (!modal.classList.contains("active")) return;
-    if (event.key === "Escape") closeArtist();
-    if (event.key === "ArrowRight") changeArtist(1);
-    if (event.key === "ArrowLeft") changeArtist(-1);
-});
-
-async function loadArtists() {
-    const grid = document.getElementById("artistsGrid");
-    const error = document.getElementById("artistError");
-    try {
-        const response = await fetch("artists.csv", { cache: "no-store" });
-        if (!response.ok) throw new Error("Could not load artists.csv (" + response.status + ")");
-        const csv = await response.text();
-        artists = parseCSV(csv).filter(artist => artist.name && artist.name.trim() !== "");
-        if (!artists.length) throw new Error("The CSV file has no artist rows with a name.");
-        renderArtistCards();
-    } catch (err) {
-        grid.innerHTML = "";
-        error.hidden = false;
-        error.textContent = "Artist details could not be loaded. Check that artists.csv is in the same folder as index.html and that the site is being viewed through GitHub Pages. (" + err.message + ")";
-    }
-}
-loadArtists();
-</script>
-</body>
-</html>
+</body></html>
