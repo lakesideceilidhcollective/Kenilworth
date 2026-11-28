@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head>
-    <base href="https://kenilworthfolkfestival.co.uk.thetrailerstage.co.uk/"><meta charset="utf-8">
+    <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kenilworth Folk Festival</title>
@@ -394,7 +394,6 @@ footer a { color: var(--gold); }
             <label><input type="checkbox" name="interests[]" value="Tickets"> <span>Tickets</span></label>
             <label><input type="checkbox" name="interests[]" value="Volunteering / stewarding"> <span>Volunteering / stewarding</span></label>
             <label><input type="checkbox" name="interests[]" value="Contributing to the festival (trade / performers)"> <span>Contributing to the festival (trade / performers)</span></label>
-            <label><input type="checkbox" name="interests[]" value="Promoting"> <span>Promoting the festival</span></label>
             <label><input type="checkbox" name="interests[]" value="Other"> <span>Other (please specify)</span></label>
         </fieldset>
         <label for="mailingOther">If you selected “Other”, please tell us more (optional)</label>
@@ -439,5 +438,261 @@ footer a { color: var(--gold); }
 body { padding-bottom: 80px !important; }
 </style>
 
+
+
+<script>
+(() => {
+    "use strict";
+
+    const grid = document.getElementById("artistsGrid");
+    const errorBox = document.getElementById("artistError");
+    const modal = document.getElementById("artistModal");
+    const modalPhoto = document.getElementById("modalPhoto");
+    const modalName = document.getElementById("modalName");
+    const modalBio = document.getElementById("modalBio");
+    const modalSocials = document.getElementById("modalSocials");
+    const modalVideoWrap = document.getElementById("modalVideoWrap");
+    const modalVideo = document.getElementById("modalVideo");
+    const modalQuote = document.getElementById("modalQuote");
+
+    let artists = [];
+    let currentArtist = 0;
+
+    // Parse CSV including quoted commas, line breaks and escaped quote characters.
+    function parseCSV(text) {
+        text = text.replace(/^\uFEFF/, "");
+        const rows = [];
+        let row = [], cell = "", quoted = false;
+
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (quoted) {
+                if (char === '"' && text[i + 1] === '"') {
+                    cell += '"';
+                    i++;
+                } else if (char === '"') {
+                    quoted = false;
+                } else {
+                    cell += char;
+                }
+            } else if (char === '"') {
+                quoted = true;
+            } else if (char === ",") {
+                row.push(cell);
+                cell = "";
+            } else if (char === "\n") {
+                row.push(cell);
+                rows.push(row);
+                row = [];
+                cell = "";
+            } else if (char !== "\r") {
+                cell += char;
+            }
+        }
+        row.push(cell);
+        if (row.some(value => value.trim() !== "")) rows.push(row);
+
+        if (rows.length < 2) return [];
+        const headers = rows.shift().map(value => value.trim().toLowerCase());
+        return rows
+            .filter(values => values.some(value => String(value || "").trim() !== ""))
+            .map(values => {
+                const item = {};
+                headers.forEach((header, index) => item[header] = (values[index] || "").trim());
+                return item;
+            })
+            .filter(item => item.name);
+    }
+
+    function safeUrl(value) {
+        if (!value) return "";
+        try {
+            const url = new URL(value, window.location.href);
+            return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+        } catch (_) {
+            return "";
+        }
+    }
+
+    function videoEmbedUrl(value) {
+        if (!value) return "";
+        try {
+            const url = new URL(value, window.location.href);
+            const host = url.hostname.replace(/^www\./, "").toLowerCase();
+            let id = "";
+
+            if (host === "youtu.be") {
+                id = url.pathname.split("/").filter(Boolean)[0] || "";
+            } else if (host.endsWith("youtube.com")) {
+                if (url.pathname === "/watch") id = url.searchParams.get("v") || "";
+                else if (/^\/(shorts|live|embed)\//.test(url.pathname)) {
+                    id = url.pathname.split("/")[2] || "";
+                }
+            } else if (host.endsWith("vimeo.com")) {
+                id = url.pathname.split("/").filter(Boolean).pop() || "";
+                if (/^\d+$/.test(id)) return "https://player.vimeo.com/video/" + id;
+            }
+
+            if (id && /^[A-Za-z0-9_-]+$/.test(id)) {
+                return "https://www.youtube-nocookie.com/embed/" + id;
+            }
+        } catch (_) {}
+        return "";
+    }
+
+    function addSocialLink(container, label, value) {
+        const href = safeUrl(value);
+        if (!href) return;
+        const link = document.createElement("a");
+        link.href = href;
+        link.textContent = label;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        container.appendChild(link);
+    }
+
+    function openArtist(index) {
+        if (!artists.length) return;
+        currentArtist = (index + artists.length) % artists.length;
+        const artist = artists[currentArtist];
+
+        modalName.textContent = artist.name || "";
+        modalBio.textContent = artist.bio || "";
+        modalBio.hidden = !artist.bio;
+
+        modalPhoto.replaceChildren();
+        if (artist.photo) {
+            const image = document.createElement("img");
+            image.src = artist.photo;
+            image.alt = artist.name || "Artist photograph";
+            image.onerror = () => {
+                modalPhoto.textContent = "Photo coming soon";
+            };
+            modalPhoto.appendChild(image);
+        } else {
+            modalPhoto.textContent = "Photo coming soon";
+        }
+
+        modalSocials.replaceChildren();
+        addSocialLink(modalSocials, "Website", artist.website);
+        addSocialLink(modalSocials, "Facebook", artist.facebook);
+        addSocialLink(modalSocials, "Instagram", artist.instagram);
+        modalSocials.hidden = modalSocials.childElementCount === 0;
+
+        modalVideo.replaceChildren();
+        const embedUrl = videoEmbedUrl(artist.video);
+        if (embedUrl) {
+            const iframe = document.createElement("iframe");
+            iframe.src = embedUrl;
+            iframe.title = artist.name + " video";
+            iframe.loading = "lazy";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            modalVideo.appendChild(iframe);
+            modalVideoWrap.classList.add("visible");
+        } else {
+            modalVideoWrap.classList.remove("visible");
+        }
+
+        modalQuote.textContent = artist.quote || "";
+        modalQuote.classList.toggle("visible", Boolean(artist.quote));
+
+        modal.classList.add("active");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+    }
+
+    function closeArtist() {
+        modal.classList.remove("active");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+        modalVideo.replaceChildren();
+    }
+
+    function changeArtist(direction) {
+        openArtist(currentArtist + direction);
+    }
+
+    function outsideModal(event) {
+        if (event.target === modal) closeArtist();
+    }
+
+    // Keep the existing inline modal controls working.
+    window.closeArtist = closeArtist;
+    window.changeArtist = changeArtist;
+    window.outsideModal = outsideModal;
+
+    function renderArtists(items) {
+        grid.replaceChildren();
+        items.forEach((artist, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "artist";
+            button.setAttribute("aria-label", "View " + artist.name);
+
+            if (artist.photo) {
+                const image = document.createElement("img");
+                image.src = artist.photo;
+                image.alt = "";
+                image.loading = "lazy";
+                image.onerror = () => image.remove();
+                button.appendChild(image);
+            } else {
+                const placeholder = document.createElement("span");
+                placeholder.className = "artist-placeholder";
+                placeholder.textContent = "Photo coming soon";
+                button.appendChild(placeholder);
+            }
+
+            const name = document.createElement("span");
+            name.className = "artist-name";
+            name.textContent = artist.name;
+            button.appendChild(name);
+            button.addEventListener("click", () => openArtist(index));
+            grid.appendChild(button);
+        });
+    }
+
+    async function loadArtists() {
+        try {
+            // artists.csv must be in the same folder as index.html.
+            const csvUrl = new URL("artists.csv", window.location.href);
+            const response = await fetch(csvUrl.href, { cache: "no-store" });
+
+            if (!response.ok) {
+                throw new Error("Could not load artists.csv (HTTP " + response.status + ").");
+            }
+
+            const csvText = await response.text();
+            artists = parseCSV(csvText);
+
+            if (!artists.length) {
+                throw new Error("artists.csv loaded, but no artist rows were found. Check that the first row contains a 'name' column.");
+            }
+
+            renderArtists(artists);
+            errorBox.hidden = true;
+        } catch (error) {
+            console.error("Artist list error:", error);
+            grid.replaceChildren();
+            const message = document.createElement("p");
+            message.className = "artist-error";
+            message.textContent = "The artist list could not be loaded. Please check that artists.csv is in the same folder as index.html and that the filename matches exactly.";
+            grid.appendChild(message);
+            errorBox.hidden = false;
+            errorBox.textContent = error.message + " If you are testing locally, open the site through a web server (for example GitHub Pages), not by double-clicking index.html.";
+        }
+    }
+
+    document.addEventListener("keydown", event => {
+        if (!modal.classList.contains("active")) return;
+        if (event.key === "Escape") closeArtist();
+        if (event.key === "ArrowLeft") changeArtist(-1);
+        if (event.key === "ArrowRight") changeArtist(1);
+    });
+
+    loadArtists();
+})();
+</script>
 
 </body></html>
